@@ -19,8 +19,8 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
      * @throws NullPointerException if {@code source} is {@code null}
      */
     public ImmutablePartition(Partition<T> source) {
-        final Set<Set<T>> subsetsBuilder = new HashSet<>();
-        final Map<T, Set<T>> mapBuilder = new HashMap<>();
+        final Set<Set<T>> subsetsBuilder = new HashSet<>(source.subsetCount());
+        final Map<T, Set<T>> mapBuilder = new HashMap<>(source.size());
 
         for (Set<T> subset : source.subsets()) {
             final Set<T> immutableSubset = Collections.unmodifiableSet(new HashSet<>(subset));
