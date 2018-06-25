@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -79,6 +80,26 @@ public class UnionFindPartitionTests {
                     Assert.assertEquals(p.connected(i, j), partitionCopy.connected(i, j));
                 }
             }
+        }
+    }
+
+    /**
+     * The toString method must be the inverse of the string constructor
+     */
+    @Test
+    public void stringConstructor() {
+        final Random rng = new Random(82465L);
+        final int size = 100;
+        for (int reps = 500; reps > 0; reps--) {
+            final Partition<Integer> p = new UnionFindPartition<>();
+            for (int i = 0; i < size; i++) {
+                p.add(i);
+            }
+            for (int i = 0; i < size / 2; i++) {
+                p.union(rng.nextInt(size), rng.nextInt(size));
+            }
+            Partition<Integer> partitionCopy = new UnionFindPartition<>(p.toString(), Integer::parseInt);
+            Assert.assertEquals(p, partitionCopy);
         }
     }
 
@@ -404,6 +425,86 @@ public class UnionFindPartitionTests {
         p1.union(0, 1);
         p2.move(0, 1);
         Assert.assertEquals(p1, p2);
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException1() {
+        new UnionFindPartition<>("[[1,2],[]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException2() {
+        new UnionFindPartition<>("[[1,2]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException3() {
+        new UnionFindPartition<>("[[1,2],[3", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException4() {
+        new UnionFindPartition<>("[[1,2],[]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException5() {
+        new UnionFindPartition<>("[[1,2],[3,,4]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException6() {
+        new UnionFindPartition<>("[[1,2],[,]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException7() {
+        new UnionFindPartition<>("[[1,2],[3,3]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException8() {
+        new UnionFindPartition<>("[[1,2],[3,4]|[5]]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException9() {
+        new UnionFindPartition<>("[[1,2],[3,4],]", Function.identity());
+    }
+
+    /**
+     * Various string constructor fail arguments.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void stringConstructorIllegalArgumentException10() {
+        new UnionFindPartition<>("[,[1,2],[3,4]]", Function.identity());
     }
 
     /**

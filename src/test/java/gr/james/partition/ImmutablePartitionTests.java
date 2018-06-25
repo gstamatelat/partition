@@ -43,6 +43,26 @@ public class ImmutablePartitionTests {
     }
 
     /**
+     * The toString method must be the inverse of the string constructor
+     */
+    @Test
+    public void stringConstructor() {
+        final Random rng = new Random(82465L);
+        final int size = 100;
+        for (int reps = 500; reps > 0; reps--) {
+            final Partition<Integer> p = new UnionFindPartition<>();
+            for (int i = 0; i < size; i++) {
+                p.add(i);
+            }
+            for (int i = 0; i < size / 2; i++) {
+                p.union(rng.nextInt(size), rng.nextInt(size));
+            }
+            Partition<Integer> partitionCopy = new ImmutablePartition<>(p);
+            Assert.assertEquals(partitionCopy, new ImmutablePartition<>(partitionCopy.toString(), Integer::parseInt));
+        }
+    }
+
+    /**
      * The contains method must throw NullPointerException if the input is null.
      */
     @Test(expected = NullPointerException.class)

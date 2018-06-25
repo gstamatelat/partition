@@ -54,6 +54,87 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         assert source.equals(this);
     }
 
+    /**
+     * Constructs a new {@link UnionFindPartition} from a {@link String}.
+     * <p>
+     * The format of the input string is the same that is being returned by the {@link #toString()} method. More
+     * specifically, it must start and end with square brackets. Each subset is denoted by a comma separated list of
+     * values enclosed by square brackets. Each subset is separated by comma in the partition string. Examples of valid
+     * partition strings include:
+     * <ul>
+     * <li>[[1,2],[3]]</li>
+     * <li>[[c],[a],[b]]</li>
+     * <li>[] (empty partition)</li>
+     * </ul>
+     * <p>
+     * The {@code deserializer} argument is used to convert an element that resides as {@link String} to the element
+     * type {@link T} of the partition. It must be a {@link Function} that accepts the string representation of an
+     * element and returns the respective object of type {@link T}.
+     * <p>
+     * This constructor will throw {@link IllegalArgumentException} if the input string does not comply with this
+     * format, while it will also relay any exceptions thrown by the {@code deserializer.apply} method.
+     * <p>
+     * Here is an example of importing a {@link Integer} partition from a string:
+     * <pre><code>
+     * Partition&lt;Integer&gt; p = new UnionFindPartition&lt;&gt;("[[1,2],[3]]", Integer::parseInt);
+     * </code></pre>
+     * <p>
+     * Another example with a {@link String} element type:
+     * <pre><code>
+     * Partition&lt;String&gt; p = new UnionFindPartition&lt;&gt;("[[1,2],[3]]", Function.identity());
+     * </code></pre>
+     * <p>
+     * The comma character is not allowed in the string representation of an element and will be interpreted as element
+     * separator. Whitespace is ignored from the input, if present.
+     *
+     * @param s            the source string
+     * @param deserializer a {@link Function} that converts a {@link String} to the element type {@link T}
+     * @throws NullPointerException     if {@code s} or {@code deserializer} is {@code null}
+     * @throws IllegalArgumentException if {@code s} is malformed
+     * @throws RuntimeException         as relayed by the {@code deserializer.apply} method
+     */
+    public UnionFindPartition(String s, Function<String, T> deserializer) {
+        this();
+        s = s.replaceAll("\\s+", "");
+        if (!s.startsWith("[") || !s.endsWith("]")) {
+            throw new IllegalArgumentException();
+        }
+        s = s.substring(1, s.length() - 1);
+
+        while (!s.isEmpty()) {
+            final int start = s.indexOf("[");
+            final int end = s.indexOf("]");
+            if (start == -1 || end == -1) {
+                throw new IllegalArgumentException();
+            }
+            if (start != 0) {
+                throw new IllegalArgumentException();
+            }
+            if (start + 2 > end) {
+                throw new IllegalArgumentException();
+            }
+            final String substring = s.substring(start + 1, end);
+            final String[] subset = substring.split(",");
+            if (subset.length == 0) {
+                throw new IllegalArgumentException();
+            }
+            final Set<T> subSet = new HashSet<>();
+            for (String x : subset) {
+                if (x.isEmpty()) {
+                    throw new IllegalArgumentException();
+                }
+                if (!subSet.add(deserializer.apply(x))) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            addSubset(subSet);
+            s = s.substring(end + 1);
+            if (s.startsWith(",") && s.length() > 1) {
+                s = s.substring(1);
+            }
+        }
+    }
+
     private void validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));

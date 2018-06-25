@@ -1,6 +1,7 @@
 package gr.james.partition;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * Immutable implementation of the {@link Partition} interface.
@@ -33,6 +34,22 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
 
         assert this.equals(source);
         assert source.equals(this);
+    }
+
+    /**
+     * Constructs a new {@link ImmutablePartition} from a {@link String}.
+     * <p>
+     * The behavior is this constructor is identical to the
+     * {@link UnionFindPartition#UnionFindPartition(String, Function)} constructor.
+     *
+     * @param s            the source string
+     * @param deserializer a {@link Function} that converts a {@link String} to the element type {@link T}
+     * @throws NullPointerException     if {@code s} or {@code deserializer} is {@code null}
+     * @throws IllegalArgumentException if {@code s} is malformed
+     * @throws RuntimeException         as relayed by the {@code deserializer.apply} method
+     */
+    public ImmutablePartition(String s, Function<String, T> deserializer) {
+        this(new UnionFindPartition<>(s, deserializer));
     }
 
     /**
