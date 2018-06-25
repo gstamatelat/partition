@@ -44,6 +44,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
      * Constructs a new {@link UnionFindPartition} by copying the given {@link Partition}.
      *
      * @param source the source {@link Partition}
+     * @throws NullPointerException if {@code source} is {@code null}
      */
     public UnionFindPartition(Partition<T> source) {
         this();

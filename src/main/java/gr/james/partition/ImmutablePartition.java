@@ -16,6 +16,7 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
      * Constructs a new {@link ImmutablePartition} by copying the given {@link Partition}.
      *
      * @param source the source {@link Partition}
+     * @throws NullPointerException if {@code source} is {@code null}
      */
     public ImmutablePartition(Partition<T> source) {
         final Set<Set<T>> subsetsBuilder = new HashSet<>();
