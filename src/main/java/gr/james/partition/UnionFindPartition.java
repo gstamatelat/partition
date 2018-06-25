@@ -528,6 +528,35 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
     /**
      * {@inheritDoc}
      *
+     * @param x {@inheritDoc}
+     * @param y {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws NullPointerException     {@inheritDoc}
+     * @throws IllegalArgumentException {@inheritDoc}
+     */
+    @Override
+    public boolean move(T x, T y) {
+        Item item1 = get(x);
+        Item item2 = get(y);
+
+        Item root1 = item1.root();
+        Item root2 = item2.root();
+
+        if (root1 == root2) {
+            return false;
+        }
+
+        split(x);
+        union(x, y);
+
+        validate();
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @return {@inheritDoc}
      */
     @Override

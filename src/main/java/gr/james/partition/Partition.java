@@ -154,6 +154,30 @@ public interface Partition<T> {
     boolean split(T t);
 
     /**
+     * Moves an element to a different subset.
+     * <p>
+     * More specifically, this method will remove {@code x} from its subset and place it in the subset containing
+     * {@code y}. If {@code x} and {@code y} are already in the same subset, this method does nothing and returns
+     * {@code false}.
+     * <p>
+     * This method is, thus, semantically equivalent to
+     * <pre><code>
+     * if (!connected(x, y)) {
+     *     split(x);
+     *     union(x, y);
+     * }
+     * </code></pre>
+     *
+     * @param x the source element to move
+     * @param y the element that portrays the target subset
+     * @return {@code true} if {@code x} and {@code y} were not already in the same subset, otherwise {@code false}
+     * @throws NullPointerException          if {@code x} or {@code y} is {@code null}
+     * @throws IllegalArgumentException      if not both {@code x} and {@code y} are elements of this partition
+     * @throws UnsupportedOperationException if the operation is not supported by this partition
+     */
+    boolean move(T x, T y);
+
+    /**
      * Returns a string representation of this partition.
      *
      * @return a string representation of this partition

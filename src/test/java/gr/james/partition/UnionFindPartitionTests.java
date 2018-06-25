@@ -71,7 +71,6 @@ public class UnionFindPartitionTests {
                 p.subsets()
         );
         Assert.assertEquals(38, p.hashCode());
-        Assert.assertEquals("[[1], [4, 5], [2, 3]]", p.toString());
     }
 
     /**
@@ -347,6 +346,34 @@ public class UnionFindPartitionTests {
     }
 
     /**
+     * The move method must return false if the inputs are in the same subset.
+     */
+    @Test
+    public void moveFalse() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.add(1);
+        p.union(0, 1);
+        Assert.assertFalse(p.move(0, 1));
+    }
+
+    /**
+     * The move method is equivalent to union.
+     */
+    @Test
+    public void moveEquivalent() {
+        final Partition<Integer> p1 = unionFindVacantPartitionSupplier.get();
+        final Partition<Integer> p2 = unionFindVacantPartitionSupplier.get();
+        p1.add(0);
+        p1.add(1);
+        p2.add(0);
+        p2.add(1);
+        p1.union(0, 1);
+        p2.move(0, 1);
+        Assert.assertEquals(p1, p2);
+    }
+
+    /**
      * The subset() contains method must throw NullPointerException if the input is null.
      */
     @Test(expected = NullPointerException.class)
@@ -617,6 +644,46 @@ public class UnionFindPartitionTests {
         final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
         p.add(0);
         p.split(1);
+    }
+
+    /**
+     * The move method should throw NullPointerException if the input 1 is null.
+     */
+    @Test(expected = NullPointerException.class)
+    public void moveNullPointerException1() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.move(null, 0);
+    }
+
+    /**
+     * The move method should throw NullPointerException if the input 2 is null.
+     */
+    @Test(expected = NullPointerException.class)
+    public void moveNullPointerException2() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.move(0, null);
+    }
+
+    /**
+     * The move method should throw IllegalArgumentException if the input 1 is not contained in the partition.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void moveIllegalArgumentException1() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.move(1, 0);
+    }
+
+    /**
+     * The move method should throw IllegalArgumentException if the input 2 is not contained in the partition.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void moveIllegalArgumentException2() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.move(0, 1);
     }
 
     /**

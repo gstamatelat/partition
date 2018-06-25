@@ -42,6 +42,7 @@ public class ImmutablePartitionTests {
         }
     }
 
+
     /**
      * The contains method must throw NullPointerException if the input is null.
      */
@@ -160,5 +161,14 @@ public class ImmutablePartitionTests {
     public void splitUnsupported() {
         final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
         immutablePartition.split(0);
+    }
+
+    /**
+     * The move method must throw UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void moveUnsupported() {
+        final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
+        immutablePartition.move(0, 1);
     }
 }
