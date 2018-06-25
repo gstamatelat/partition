@@ -50,6 +50,39 @@ public class UnionFindPartitionTests {
     }
 
     /**
+     * Copy an existing partition.
+     */
+    @Test
+    public void copy() {
+        final Random rng = new Random(82465L);
+        final int size = 100;
+        for (int reps = 500; reps > 0; reps--) {
+            final Partition<Integer> p = new UnionFindPartition<>();
+            for (int i = 0; i < size; i++) {
+                p.add(i);
+            }
+            for (int i = 0; i < size / 2; i++) {
+                p.union(rng.nextInt(size), rng.nextInt(size));
+            }
+            Partition<Integer> partitionCopy = new UnionFindPartition<>(p);
+            Assert.assertEquals(p, partitionCopy);
+            for (int i = 0; i < size; i++) {
+                Assert.assertEquals(p.subset(i), partitionCopy.subset(i));
+            }
+            for (int i = 0; i < 2 * size; i++) {
+                Assert.assertEquals(p.contains(i), partitionCopy.contains(i));
+            }
+            Assert.assertEquals(p.size(), partitionCopy.size());
+            Assert.assertEquals(p.subsetCount(), partitionCopy.subsetCount());
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    Assert.assertEquals(p.connected(i, j), partitionCopy.connected(i, j));
+                }
+            }
+        }
+    }
+
+    /**
      * Test for the simple partition [[1],[2,3],[4,5]].
      */
     @Test

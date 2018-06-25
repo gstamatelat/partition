@@ -40,6 +40,20 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         this.count = 0;
     }
 
+    /**
+     * Constructs a new {@link UnionFindPartition} by copying the given {@link Partition}.
+     *
+     * @param source the source {@link Partition}
+     */
+    public UnionFindPartition(Partition<T> source) {
+        this();
+        for (Set<T> subset : source.subsets()) {
+            addSubset(subset);
+        }
+        assert this.equals(source);
+        assert source.equals(this);
+    }
+
     private void validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));

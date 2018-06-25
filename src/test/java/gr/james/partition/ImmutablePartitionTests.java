@@ -42,7 +42,6 @@ public class ImmutablePartitionTests {
         }
     }
 
-
     /**
      * The contains method must throw NullPointerException if the input is null.
      */
