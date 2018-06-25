@@ -152,7 +152,7 @@ public class ImmutablePartitionTests {
     @Test(expected = UnsupportedOperationException.class)
     public void addSubsetUnsupported() {
         final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
-        immutablePartition.addSubset(Helper.hashSetOf(0));
+        immutablePartition.addSubset(Helper.newHashSet(0));
     }
 
     /**

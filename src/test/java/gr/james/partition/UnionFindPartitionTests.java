@@ -117,10 +117,10 @@ public class UnionFindPartitionTests {
         p.union(2, 3);
         p.union(4, 5);
         Assert.assertEquals(
-                Helper.hashSetOf(
-                        Helper.hashSetOf(1),
-                        Helper.hashSetOf(2, 3),
-                        Helper.hashSetOf(4, 5)
+                Helper.newHashSet(
+                        Helper.newHashSet(1),
+                        Helper.newHashSet(2, 3),
+                        Helper.newHashSet(4, 5)
                 ),
                 p.subsets()
         );
@@ -235,10 +235,10 @@ public class UnionFindPartitionTests {
             set.add(i);
         }
         for (int i = 0; i < size; i += 2) {
-            subsets.add(Helper.hashSetOf(i, i + 1));
+            subsets.add(Helper.newHashSet(i, i + 1));
         }
         for (int i = 0; i < size; i += 2) {
-            p.addSubset(Helper.hashSetOf(i, i + 1));
+            p.addSubset(Helper.newHashSet(i, i + 1));
         }
 
         Assert.assertEquals(size, p.size());
@@ -252,7 +252,7 @@ public class UnionFindPartitionTests {
         }
         Assert.assertEquals(subsets, p.subsets());
         for (int i = 0; i < size; i++) {
-            Assert.assertEquals(Helper.hashSetOf(2 * (i / 2), 2 * (i / 2) + 1), p.subset(i));
+            Assert.assertEquals(Helper.newHashSet(2 * (i / 2), 2 * (i / 2) + 1), p.subset(i));
         }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -278,7 +278,7 @@ public class UnionFindPartitionTests {
             set.add(i);
         }
         for (int i = 0; i < size; i += 2) {
-            subsets.add(Helper.hashSetOf(i, i + 1));
+            subsets.add(Helper.newHashSet(i, i + 1));
         }
         for (int i = 0; i < size; i += 2) {
             p.add(i);
@@ -297,7 +297,7 @@ public class UnionFindPartitionTests {
         }
         Assert.assertEquals(subsets, p.subsets());
         for (int i = 0; i < size; i++) {
-            Assert.assertEquals(Helper.hashSetOf(2 * (i / 2), 2 * (i / 2) + 1), p.subset(i));
+            Assert.assertEquals(Helper.newHashSet(2 * (i / 2), 2 * (i / 2) + 1), p.subset(i));
         }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -371,12 +371,12 @@ public class UnionFindPartitionTests {
         p.add(0);
         Assert.assertFalse(p.subsets().contains(""));
         Assert.assertFalse(p.subsets().contains(new HashSet<>()));
-        Assert.assertFalse(p.subsets().contains(Helper.linkedSetOf(1, 0)));
-        Assert.assertFalse(p.subsets().contains(Helper.linkedSetOf(0, 1)));
+        Assert.assertFalse(p.subsets().contains(Helper.newLinkedHashSet(1, 0)));
+        Assert.assertFalse(p.subsets().contains(Helper.newLinkedHashSet(0, 1)));
         p.add(1);
         p.add(2);
         p.union(0, 1);
-        Assert.assertFalse(p.subsets().contains(Helper.linkedSetOf(0, 2)));
+        Assert.assertFalse(p.subsets().contains(Helper.newLinkedHashSet(0, 2)));
     }
 
     /**
@@ -532,7 +532,7 @@ public class UnionFindPartitionTests {
     @Test(expected = NullPointerException.class)
     public void subsetsContainsNullPointerException2() {
         final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
-        p.subsets().contains(Helper.hashSetOf(null, 0));
+        p.subsets().contains(Helper.newHashSet(null, 0));
     }
 
     /**
