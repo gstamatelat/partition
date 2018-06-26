@@ -482,6 +482,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         this.items.clear();
         this.anyRoot = null;
         this.count = 0;
+        validate();
     }
 
     /**
@@ -537,6 +538,37 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         assert subset.stream().map(t -> get(t).parent).distinct().count() == 1;
 
         validate();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param t {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws NullPointerException {@inheritDoc}
+     */
+    @Override
+    public boolean removeSubset(T t) {
+        if (t == null) {
+            throw new NullPointerException();
+        }
+        Item item = items.get(t);
+        if (item == null) {
+            return false;
+        }
+        Item root = item.root();
+        Item current = root;
+        do {
+            Item previous = items.remove(current.item);
+            assert previous != null;
+            current = current.nextItem;
+        } while (current != root);
+        root.removeFromComponentList();
+        count--;
+        assert !items.containsKey(t);
+        assert items.values().stream().noneMatch(el -> el.item.equals(t));
+        validate();
+        return true;
     }
 
     /**

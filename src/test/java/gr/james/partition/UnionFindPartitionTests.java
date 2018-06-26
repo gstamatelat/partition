@@ -428,6 +428,18 @@ public class UnionFindPartitionTests {
     }
 
     /**
+     * removeSubset correctness.
+     */
+    @Test
+    public void removeSubset() {
+        final Partition<Integer> p = new UnionFindPartition<>("[[1,2],[3,4]]", Integer::parseInt);
+        boolean removed = p.removeSubset(1);
+        Assert.assertTrue(removed);
+        Assert.assertEquals(p, new UnionFindPartition<>("[[3,4]]", Integer::parseInt));
+        Assert.assertFalse(p.removeSubset(5));
+    }
+
+    /**
      * The clear method resets to an empty partition.
      */
     @Test
@@ -732,6 +744,15 @@ public class UnionFindPartitionTests {
         final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
         final Set<Integer> subset = new HashSet<>();
         p.addSubset(subset);
+    }
+
+    /**
+     * The removeSubset method should throw NullPointerException if the input is null.
+     */
+    @Test(expected = NullPointerException.class)
+    public void removeSubsetNullPointerException() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.removeSubset(null);
     }
 
     /**

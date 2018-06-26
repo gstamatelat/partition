@@ -112,7 +112,10 @@ public interface Partition<T> {
     /**
      * Removes the specified element from this partition if it is present.
      * <p>
-     * As a result, this method also removes the element from its disjoint subset.
+     * As a result, this method also removes the element from its disjoint subset. The return value indicates whether a
+     * change in the partition occurred as a result of this method. {@code true} indicates that {@code t} was present in
+     * the partition and it was removed, while {@code false} indicates that the element was not present and no action
+     * took place.
      *
      * @param t the element to be removed from this partition, if present
      * @return {@code true} if this partition contained the specific element, otherwise {@code false}
@@ -140,6 +143,22 @@ public interface Partition<T> {
      * @throws UnsupportedOperationException if the operation is not supported by this partition
      */
     void addSubset(Set<T> subset);
+
+    /**
+     * Removes the subset enclosing the specified element from this partition.
+     * <p>
+     * In other words, this method will remove all elements in the same subset as {@code t} (including {@code t}) from
+     * the partition. The return value indicates whether a change in the partition occurred as a result of this method.
+     * {@code true} indicates that {@code t} was present in the partition and at least one element was removed, while
+     * {@code false} indicates that the element was not present and no action took place.
+     *
+     * @param t the element
+     * @return {@code true} if this partition contained the specific element and its subset was removed, otherwise
+     * {@code false}
+     * @throws NullPointerException          if {@code t} is {@code null}
+     * @throws UnsupportedOperationException if the operation is not supported by this partition
+     */
+    boolean removeSubset(T t);
 
     /**
      * Connect {@code x} and {@code y} so that their disjoint subsets are merged.

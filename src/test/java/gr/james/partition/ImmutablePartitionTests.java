@@ -156,6 +156,15 @@ public class ImmutablePartitionTests {
     }
 
     /**
+     * The removeSubset method must throw UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void removeSubsetUnsupported() {
+        final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
+        immutablePartition.removeSubset(0);
+    }
+
+    /**
      * The remove method must throw UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)
