@@ -35,6 +35,9 @@ public interface Partition<T> {
 
     /**
      * Returns a readonly {@link Set} view of all the elements in this partition.
+     * <p>
+     * The returned {@link Set} will reflect changes to the partition. The elements are in no particular order inside
+     * the returned {@link Set}.
      *
      * @return a readonly {@link Set} view of all the elements in this partition
      */
@@ -51,6 +54,9 @@ public interface Partition<T> {
 
     /**
      * Returns a readonly {@link Set} view of the subsets in this partition.
+     * <p>
+     * The returned {@link Set} contains all the disjoint sets in a set-of-sets scheme. The returned {@link Set} will
+     * reflect changes to the partition. The disjoint sets are in no particular order inside the container.
      *
      * @return a readonly {@link Set} view of the subsets in this partition
      */
@@ -61,6 +67,8 @@ public interface Partition<T> {
      * <p>
      * If the element {@code t} is removed from the partition in a future time, any method in the returned view will
      * throw {@link IllegalArgumentException}, until this element is reinserted in the partition.
+     * <p>
+     * The elements are in no particular order inside the returned {@link Set}.
      *
      * @param t the element
      * @return a readonly view of the subset that encloses {@code t}
@@ -71,6 +79,12 @@ public interface Partition<T> {
 
     /**
      * Returns a value indicating whether two elements are in the same subset.
+     * <p>
+     * More specifically, returns {@code true} if {@code x} and {@code y} are in the same subset, otherwise
+     * {@code false}.
+     * <p>
+     * The {@code connected} method is commutative and the call {@code connected(x, y)} will have exactly the same
+     * behavior as {@code connected(y, x)}.
      * <p>
      * This method is equivalent to
      * <pre><code>
@@ -120,7 +134,11 @@ public interface Partition<T> {
      * Connect {@code x} and {@code y} so that their disjoint subsets are merged.
      * <p>
      * If {@code x} and {@code y} are on the same subset or if {@code x.equals(y)}, this method does nothing and returns
-     * {@code false}.
+     * {@code false}. Otherwise, the disjoint sets of {@code x} and {@code y} will be merged into a single one and
+     * {@code true} will be returned.
+     * <p>
+     * The {@code union} method is commutative and the call {@code union(x, y)} will have exactly the same behavior as
+     * {@code union(y, x)}.
      *
      * @param x one element
      * @param y the other element
