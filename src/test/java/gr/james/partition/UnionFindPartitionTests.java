@@ -428,6 +428,19 @@ public class UnionFindPartitionTests {
     }
 
     /**
+     * The clear method resets to an empty partition.
+     */
+    @Test
+    public void clear() {
+        final Partition<Integer> p = unionFindVacantPartitionSupplier.get();
+        p.add(0);
+        p.add(1);
+        p.union(0, 1);
+        p.clear();
+        Assert.assertEquals(p, unionFindVacantPartitionSupplier.get());
+    }
+
+    /**
      * Various string constructor fail arguments.
      */
     @Test(expected = IllegalArgumentException.class)

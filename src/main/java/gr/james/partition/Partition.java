@@ -120,6 +120,15 @@ public interface Partition<T> {
     boolean remove(T t);
 
     /**
+     * Removes all the elements from this partition.
+     * <p>
+     * The partition will be empty after this method returns. An empty partition contains no elements and no subsets.
+     *
+     * @throws UnsupportedOperationException if the operation is not supported by this partition
+     */
+    void clear();
+
+    /**
      * Inserts a {@link Set} of elements as a connected subset.
      *
      * @param subset the subset

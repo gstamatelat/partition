@@ -165,6 +165,15 @@ public class ImmutablePartitionTests {
     }
 
     /**
+     * The clear method must throw UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void clearUnsupported() {
+        final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
+        immutablePartition.clear();
+    }
+
+    /**
      * The union method must throw UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)

@@ -474,6 +474,16 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public void clear() {
+        this.items.clear();
+        this.anyRoot = null;
+        this.count = 0;
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param subset {@inheritDoc}
      * @throws NullPointerException     {@inheritDoc}

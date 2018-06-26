@@ -170,6 +170,16 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
     /**
      * This method is unsupported and will always throw {@link UnsupportedOperationException}.
      *
+     * @throws UnsupportedOperationException always
+     */
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This method is unsupported and will always throw {@link UnsupportedOperationException}.
+     *
      * @param subset {@inheritDoc}
      * @throws UnsupportedOperationException always
      */
