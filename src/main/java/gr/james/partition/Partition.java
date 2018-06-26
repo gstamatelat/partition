@@ -111,6 +111,8 @@ public interface Partition<T> {
 
     /**
      * Removes the specified element from this partition if it is present.
+     * <p>
+     * As a result, this method also removes the element from its disjoint subset.
      *
      * @param t the element to be removed from this partition, if present
      * @return {@code true} if this partition contained the specific element, otherwise {@code false}
