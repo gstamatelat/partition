@@ -70,7 +70,8 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
      * <p>
      * The {@code deserializer} argument is used to convert an element that resides as {@link String} to the element
      * type {@link T} of the partition. It must be a {@link Function} that accepts the string representation of an
-     * element and returns the respective object of type {@link T}.
+     * element and returns the respective object of type {@link T}. The string representation of an element cannot
+     * contain any whitespace or commas.
      * <p>
      * This constructor will throw {@link IllegalArgumentException} if the input string does not comply with this
      * format, while it will also relay any exceptions thrown by the {@code deserializer.apply} method.
