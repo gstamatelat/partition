@@ -47,7 +47,7 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
      * @param deserializer a {@link Function} that converts a {@link String} to the element type {@link T}
      * @throws NullPointerException     if {@code s} or {@code deserializer} is {@code null}
      * @throws IllegalArgumentException if {@code s} is malformed
-     * @throws RuntimeException         as relayed by the {@code deserializer.apply} method
+     * @throws RuntimeException         relayed by the {@code deserializer.apply} method
      */
     public ImmutablePartition(String s, Function<String, T> deserializer) {
         this(new UnionFindPartition<>(s, deserializer));
