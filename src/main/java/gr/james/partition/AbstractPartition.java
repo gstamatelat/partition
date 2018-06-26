@@ -1,11 +1,16 @@
 package gr.james.partition;
 
+import java.util.Set;
+
 abstract class AbstractPartition<T> implements Partition<T> {
     @Override
     public int hashCode() {
         int hashCode = 0;
-        for (T e : elements()) {
-            hashCode += e.hashCode() ^ subset(e).hashCode();
+        for (Set<T> subset : subsets()) {
+            final int subsetHashCode = subset.hashCode();
+            for (T t : subset) {
+                hashCode += subsetHashCode ^ t.hashCode();
+            }
         }
         return hashCode;
     }
