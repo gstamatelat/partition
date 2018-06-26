@@ -163,6 +163,8 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
             return count == cycleLength(anyRoot, x -> x.nextComponent);
         });
         assert (anyRoot == null) || (anyRoot.parent == anyRoot);
+        assert (items.size() == 0) == (count == 0);
+        assert items.size() >= count;
     }
 
     private int cycleLength(Item start, Function<Item, Item> next) {
