@@ -11,6 +11,28 @@ data structure with operations bounded by the inverse Ackermann function. The
 `ImmutablePartition` class is an immutable implementation with constant time
 access to all the supported methods.
 
+## Using
+
+Partition is published to
+[jcenter](https://bintray.com/gstamatelat/partition/partition). You
+can add a dependency from your project as follows:
+
+Using Maven
+
+```xml
+<dependency>
+  <groupId>gr.james</groupId>
+  <artifactId>partition</artifactId>
+  <version>0.1</version>
+</dependency>
+```
+
+Using Gradle
+
+```
+compile 'gr.james:partition:0.1'
+```
+
 ## Example
 
 ```java
