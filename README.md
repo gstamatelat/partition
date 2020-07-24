@@ -10,3 +10,20 @@ characteristics. The `UnionFindPartition` implementation is a Union-Find-Delete
 data structure with operations bounded by the inverse Ackermann function. The
 `ImmutablePartition` class is an immutable implementation with constant time
 access to all the supported methods.
+
+## Example
+
+```java
+Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0,10).forEach(p::add);
+p.union(0,1);
+p.union(1,2);
+System.out.println(p);
+p.union(3,4);
+p.union(4,5);
+p.union(5,6);
+p.union(6,7);
+System.out.println(p);
+p.union(8,9);
+System.out.println(p);
+```
