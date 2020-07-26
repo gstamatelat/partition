@@ -54,6 +54,20 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
     }
 
     /**
+     * Constructs a new {@link ImmutablePartition} from a {@link Map}.
+     * <p>
+     * The behavior is this constructor is identical to the
+     * {@link UnionFindPartition#UnionFindPartition(Map)} constructor.
+     *
+     * @param source the source map
+     * @throws NullPointerException if {@code source} is {@code null} or any key or value in {@code source} is
+     *                              {@code null}
+     */
+    public ImmutablePartition(Map<T, Object> source) {
+        this(new UnionFindPartition<>(source));
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return {@inheritDoc}

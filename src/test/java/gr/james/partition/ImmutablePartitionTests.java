@@ -3,6 +3,8 @@ package gr.james.partition;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -60,6 +62,75 @@ public class ImmutablePartitionTests {
             Partition<Integer> partitionCopy = new ImmutablePartition<>(p);
             Assert.assertEquals(partitionCopy, new ImmutablePartition<>(partitionCopy.toString(), Integer::parseInt));
         }
+    }
+
+    /**
+     * Test the {@link Map} contructor.
+     */
+    @Test
+    public void mapConstructor() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = new Object();
+        m.put(1, gr1);
+        m.put(2, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p = new ImmutablePartition<>(m);
+        Assert.assertEquals(3, p.subsetCount());
+        Assert.assertTrue(p.connected(1, 3));
+        Assert.assertTrue(p.connected(2, 5));
+    }
+
+    /**
+     * Map constructor throws {@link NullPointerException} if input is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void mapConstructorContainsNull() {
+        final Map<Integer, Object> m = null;
+        final Partition<Integer> p = new ImmutablePartition<>(m);
+    }
+
+    /**
+     * Map constructor throws {@link NullPointerException} if any key is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void mapConstructorContainsNullKey() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = new Object();
+        m.put(1, gr1);
+        m.put(null, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p = new ImmutablePartition<>(m);
+        Assert.assertEquals(3, p.subsetCount());
+        Assert.assertTrue(p.connected(1, 3));
+        Assert.assertTrue(p.connected(2, 5));
+    }
+
+    /**
+     * Map constructor throws {@link NullPointerException} if any value is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void mapConstructorContainsNullValue() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = null;
+        m.put(1, gr1);
+        m.put(2, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p = new ImmutablePartition<>(m);
+        Assert.assertEquals(3, p.subsetCount());
+        Assert.assertTrue(p.connected(1, 3));
+        Assert.assertTrue(p.connected(2, 5));
     }
 
     /**

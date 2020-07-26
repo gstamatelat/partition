@@ -137,6 +137,36 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         }
     }
 
+    /**
+     * Constructs a new {@link ImmutablePartition} from a {@link Map}.
+     * <p>
+     * The final partition will contain all the keys in {@code source}, partitioned in a way dictated by their values.
+     * More specifically, two keys will be on the same subset if and only if their values {@code v1} and {@code v2} are
+     * equal: <code>v1.equals(v2)</code>.
+     *
+     * @param source the source map
+     * @throws NullPointerException if {@code source} is {@code null} or any key or value in {@code source} is
+     *                              {@code null}
+     */
+    public UnionFindPartition(Map<T, Object> source) {
+        this();
+        final Map<Object, Set<T>> inverse = new HashMap<>();
+        for (Map.Entry<T, Object> e : source.entrySet()) {
+            final T key = e.getKey();
+            final Object value = e.getValue();
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            inverse.merge(value, Helper.newHashSet(key), (x, y) -> {
+                x.add(key);
+                return x;
+            });
+        }
+        for (Set<T> values : inverse.values()) {
+            addSubset(values);
+        }
+    }
+
     private void validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));
