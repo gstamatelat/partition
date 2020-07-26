@@ -14,9 +14,11 @@ public final class Partitions {
     /**
      * Returns an iterator that iterates through all possible partitions of a set.
      * <p>
-     * Specifically, the iterator will enumerate all possible partitions that can exist from the set {@code of}. The
-     * {@code factory} function dictates how the new {@link Partition} will be constructed and is invoked for every call
-     * the the {@link Iterator#next()} method. Each {@code next()} call will return a new {@link Partition}.
+     * Specifically, the iterator will enumerate all possible partitions that can exist from the set {@code elements}.
+     * The {@code factory} function dictates how the new {@link Partition} will be constructed and is invoked for every
+     * call of the {@link Iterator#next()} method. Each {@code next()} call will return a new {@link Partition}.
+     * Changes to the {@code elements} set will not reflect to the returned iterator after this method has been
+     * invoked.
      * <p>
      * The algorithm used in this method is mentioned in <a href="https://stackoverflow.com/a/30898130/296631">this
      * answer in StackOverflow.com</a>. Specifically the pseudocode is as follows:
@@ -42,27 +44,29 @@ public final class Partitions {
      * Partitions.partitions(set, ImmutablePartition::new);
      * </code></pre>
      * The {@link Iterator#next()} method runs in constant amortized time but it will invoke the {@code factory} method
-     * which, if implemented properly, should run in linear time in respect to the number of elements.
+     * which, if implemented properly, should run in linear time in respect to the number of elements. The
+     * {@link Iterator} returned by this method uses extra memory that is linear in size in respect to the size of
+     * {@code elements}.
      *
-     * @param of      the element set
-     * @param factory a function that creates a {@link Partition} from an element set and a mapping function
-     * @param <T>     the element type
-     * @return an {@link Iterator} that iterates through all possible partitions of the set {@code of}
+     * @param elements the element set
+     * @param factory  a function that creates a {@link Partition} from an element set and a mapping function
+     * @param <T>      the element type
+     * @return an {@link Iterator} that iterates through all possible partitions of {@code elements}
      * @throws NullPointerException     if {@code of} or {@code factory} is {@code null}
      * @throws NullPointerException     if any element in {@code of} is {@code null}
      * @throws IllegalArgumentException if {@code of} is empty
      */
-    public static <T> Iterator<Partition<T>> partitions(Set<T> of, BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
+    public static <T> Iterator<Partition<T>> partitions(Set<T> elements, BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
         if (factory == null) {
             throw new NullPointerException();
         }
-        if (of.size() < 1) {
+        if (elements.size() < 1) {
             throw new IllegalArgumentException();
         }
-        final PartitionsIterator pi = new PartitionsIterator(of.size());
+        final PartitionsIterator pi = new PartitionsIterator(elements.size());
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
-        for (T e : of) {
+        for (T e : elements) {
             if (e == null) {
                 throw new NullPointerException();
             }
