@@ -33,6 +33,14 @@ public final class Partitions {
      * 7. Return the next partition v and go back to step 4.
      * </code></pre>
      * <p>
+     * Typically, the implicit map constructor should be used as {@code factory}, for example:
+     * <pre><code>
+     * Partitions.partitions(set, UnionFindPartition::new);
+     * </code></pre>
+     * or
+     * <pre><code>
+     * Partitions.partitions(set, ImmutablePartition::new);
+     * </code></pre>
      * The {@link Iterator#next()} method runs in constant amortized time but it will invoke the {@code factory} method
      * which, if implemented properly, should run in linear time in respect to the number of elements.
      *
