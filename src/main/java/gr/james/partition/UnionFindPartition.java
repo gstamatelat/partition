@@ -167,6 +167,40 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         }
     }
 
+    /**
+     * Constructs a new {@link ImmutablePartition} from an implicit map.
+     * <p>
+     * Unlike the {@link UnionFindPartition#UnionFindPartition(Map)} constructor, the map is not explicit, but rather
+     * the values are dictated by the {@code mapping} function that, otherwise, behaves the same way.
+     *
+     * @param elements the elements set
+     * @param mapping  the mapping function that transforms an elements into the representation of its subset
+     * @throws NullPointerException if {@code elements} or {@code mapping} is {@code null}
+     * @throws NullPointerException if any element in {@code elements} is {@code null}
+     * @throws NullPointerException if any value resulting from the mapping function of an element is {@code null}
+     * @throws RuntimeException     propagated by the {@code mapping.apply} method
+     */
+    public UnionFindPartition(Set<T> elements, Function<T, Object> mapping) {
+        this();
+        if (mapping == null) {
+            throw new NullPointerException();
+        }
+        final Map<Object, Set<T>> inverse = new HashMap<>();
+        for (T key : elements) {
+            final Object value = mapping.apply(key);
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            inverse.merge(value, Helper.newHashSet(key), (x, y) -> {
+                x.add(key);
+                return x;
+            });
+        }
+        for (Set<T> values : inverse.values()) {
+            addSubset(values);
+        }
+    }
+
     private void validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));

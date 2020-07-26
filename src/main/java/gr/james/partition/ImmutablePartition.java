@@ -40,7 +40,7 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
     /**
      * Constructs a new {@link ImmutablePartition} from a {@link String}.
      * <p>
-     * The behavior is this constructor is identical to the
+     * The behavior of this constructor is identical to the
      * {@link UnionFindPartition#UnionFindPartition(String, Function)} constructor.
      *
      * @param s            the source string
@@ -56,8 +56,8 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
     /**
      * Constructs a new {@link ImmutablePartition} from a {@link Map}.
      * <p>
-     * The behavior is this constructor is identical to the
-     * {@link UnionFindPartition#UnionFindPartition(Map)} constructor.
+     * The behavior of this constructor is identical to the {@link UnionFindPartition#UnionFindPartition(Map)}
+     * constructor.
      *
      * @param source the source map
      * @throws NullPointerException if {@code source} is {@code null} or any key or value in {@code source} is
@@ -65,6 +65,23 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
      */
     public ImmutablePartition(Map<T, Object> source) {
         this(new UnionFindPartition<>(source));
+    }
+
+    /**
+     * Constructs a new {@link ImmutablePartition} from an implicit map.
+     * <p>
+     * The behavior of this constructor is identical to the {@link UnionFindPartition#UnionFindPartition(Set, Function)}
+     * constructor.
+     *
+     * @param elements the elements set
+     * @param mapping  the mapping function that transforms an elements into the representation of its subset
+     * @throws NullPointerException if {@code elements} or {@code mapping} is {@code null}
+     * @throws NullPointerException if any element in {@code elements} is {@code null}
+     * @throws NullPointerException if any value resulting from the mapping function of an element is {@code null}
+     * @throws RuntimeException     propagated by the {@code mapping.apply} method
+     */
+    public ImmutablePartition(Set<T> elements, Function<T, Object> mapping) {
+        this(new UnionFindPartition<>(elements, mapping));
     }
 
     /**

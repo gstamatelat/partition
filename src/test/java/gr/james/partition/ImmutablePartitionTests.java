@@ -3,9 +3,7 @@ package gr.james.partition;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Tests for the ImmutablePartition implementation.
@@ -79,6 +77,83 @@ public class ImmutablePartitionTests {
         m.put(4, gr3);
         m.put(5, gr2);
         final Partition<Integer> p = new ImmutablePartition<>(m);
+        Assert.assertEquals(3, p.subsetCount());
+        Assert.assertTrue(p.connected(1, 3));
+        Assert.assertTrue(p.connected(2, 5));
+    }
+
+    /**
+     * Test the implicit map contructor.
+     */
+    @Test
+    public void implicitMapConstructor() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = new Object();
+        m.put(1, gr1);
+        m.put(2, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p1 = new ImmutablePartition<>(m.keySet(), m::get);
+        final Partition<Integer> p2 = new ImmutablePartition<>(m);
+        Assert.assertEquals(p1, p2);
+    }
+
+    /**
+     * Implicit map constructor throws {@link NullPointerException} if first input is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void implicitMapConstructorContainsNull1() {
+        final Set<Integer> elements = null;
+        final Partition<Integer> p = new ImmutablePartition<>(elements, i -> i);
+    }
+
+    /**
+     * Implicit map constructor throws {@link NullPointerException} if second input is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void implicitMapConstructorContainsNull2() {
+        final Set<Integer> elements = new HashSet<>();
+        final Partition<Integer> p = new ImmutablePartition<>(elements, null);
+    }
+
+    /**
+     * Implicit map constructor throws {@link NullPointerException} if any key is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void implicitMapConstructorContainsNullKey() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = new Object();
+        m.put(1, gr1);
+        m.put(null, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p = new ImmutablePartition<>(m.keySet(), m::get);
+        Assert.assertEquals(3, p.subsetCount());
+        Assert.assertTrue(p.connected(1, 3));
+        Assert.assertTrue(p.connected(2, 5));
+    }
+
+    /**
+     * Implicit map constructor throws {@link NullPointerException} if any value is {@code null}.
+     */
+    @Test(expected = NullPointerException.class)
+    public void implicitMapConstructorContainsNullValue() {
+        final Map<Integer, Object> m = new HashMap<>();
+        final Object gr1 = new Object();
+        final Object gr2 = new Object();
+        final Object gr3 = null;
+        m.put(1, gr1);
+        m.put(2, gr2);
+        m.put(3, gr1);
+        m.put(4, gr3);
+        m.put(5, gr2);
+        final Partition<Integer> p = new ImmutablePartition<>(m.keySet(), m::get);
         Assert.assertEquals(3, p.subsetCount());
         Assert.assertTrue(p.connected(1, 3));
         Assert.assertTrue(p.connected(2, 5));
