@@ -10,5 +10,7 @@
  * implementation is a Union-Find-Delete data structure with operations bounded by the inverse Ackermann function. The
  * {@link gr.james.partition.ImmutablePartition} class is an immutable implementation with constant time access to all
  * the supported methods.
+ * <p>
+ * The {@link gr.james.partition.Partitions} class contains auxiliary, static methods for partitions.
  */
 package gr.james.partition;
