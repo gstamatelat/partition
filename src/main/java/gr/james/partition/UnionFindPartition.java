@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
  * <a href="https://doi.org/10.1007/11523468_7">Union-Find with Constant Time Deletions (Alstrup, Gørtz, Rauhe, Thorup,
  * Zwick)</a>.
  * <p>
- * The implementation uses a classic union-find with union-by-size and path splitting optimizations. During, the
+ * The implementation uses a classic union-find with union-by-size and path splitting optimizations. During the
  * <i>find</i> operation, path splitting makes every node on the path point to its grandparent. This optimization can
  * be done in a single <i>find</i> pass.
  * <p>
