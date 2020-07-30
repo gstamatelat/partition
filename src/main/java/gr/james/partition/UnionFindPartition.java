@@ -203,6 +203,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
     private void validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
+        assert !items.containsKey(null);
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));
         assert items.values().stream().distinct().count() == items.keySet().size();
         assert items.values().stream().allMatch(el -> {
@@ -467,6 +468,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
      */
     @Override
     public boolean add(T t) {
+        if (t == null) throw new NullPointerException();
         final Item newItem = new Item(t);
         final Item previous = items.putIfAbsent(t, newItem);
         if (previous != null) {
