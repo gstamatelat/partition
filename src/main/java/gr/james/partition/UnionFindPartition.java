@@ -492,7 +492,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
      * @throws IllegalArgumentException {@inheritDoc}
      */
     @Override
-    public boolean addAndUnion(T x, T y) {
+    public boolean merge(T x, T y) {
         // Initialize
         final Item newItem = new Item(x);
         if (y == null) throw new NullPointerException();

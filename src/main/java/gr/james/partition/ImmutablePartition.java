@@ -195,7 +195,7 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
      * @throws UnsupportedOperationException always
      */
     @Override
-    public boolean addAndUnion(T x, T y) {
+    public boolean merge(T x, T y) {
         throw new UnsupportedOperationException();
     }
 

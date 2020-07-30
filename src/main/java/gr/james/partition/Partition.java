@@ -134,7 +134,7 @@ public interface Partition<T> {
      * @throws IllegalArgumentException      if {@code y} is not an element of this partition
      * @throws UnsupportedOperationException if the operation is not supported by this partition
      */
-    boolean addAndUnion(T x, T y);
+    boolean merge(T x, T y);
 
     /**
      * Removes the specified element from this partition if it is present.

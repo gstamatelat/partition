@@ -311,36 +311,36 @@ public class UnionFindPartitionTests {
     }
 
     /**
-     * The addAndUnion method should be equivalent to add and union.
+     * The merge method should be equivalent to add and union.
      */
     @Test
-    public void addAndUnionEquivalence() {
+    public void mergeEquivalence() {
         final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
         final Partition<String> p2 = new UnionFindPartition<>(p1);
-        p1.addAndUnion("4", "1");
+        p1.merge("4", "1");
         p2.add("4");
         p2.union("4", "1");
         Assert.assertEquals(p1, p2);
     }
 
     /**
-     * The addAndUnion method must create a new component if both inputs are the same element.
+     * The merge method must create a new component if both inputs are the same element.
      */
     @Test
-    public void addAndUnionSameInputs() {
+    public void mergeSameInputs() {
         final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
-        p1.addAndUnion("4", "4");
+        p1.merge("4", "4");
         final Partition<String> p2 = new UnionFindPartition<>("[[1],[2,3],[4]]", Function.identity());
         Assert.assertEquals(p1, p2);
     }
 
     /**
-     * The addAndUnion method should return false if the new element is already in the partition.
+     * The merge method should return false if the new element is already in the partition.
      */
     @Test
-    public void addAndUnionReturnsFalse() {
+    public void mergeReturnsFalse() {
         final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
-        Assert.assertFalse(p1.addAndUnion("1", "2"));
+        Assert.assertFalse(p1.merge("1", "2"));
     }
 
     /**
@@ -486,35 +486,35 @@ public class UnionFindPartitionTests {
     }
 
     /**
-     * addAndUnion must throw NullPointerException on any null input.
+     * merge must throw NullPointerException on any null input.
      */
     @Test(expected = NullPointerException.class)
-    public void addAndUnionNullPointerException1() {
-        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("3", null);
+    public void mergeNullPointerException1() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).merge("3", null);
     }
 
     /**
-     * addAndUnion must throw NullPointerException on any null input.
+     * merge must throw NullPointerException on any null input.
      */
     @Test(expected = NullPointerException.class)
-    public void addAndUnionNullPointerException2() {
-        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion(null, "3");
+    public void mergeNullPointerException2() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).merge(null, "3");
     }
 
     /**
-     * addAndUnion must throw NullPointerException on any null input.
+     * merge must throw NullPointerException on any null input.
      */
     @Test(expected = NullPointerException.class)
-    public void addAndUnionNullPointerException3() {
-        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("1", null);
+    public void mergeNullPointerException3() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).merge("1", null);
     }
 
     /**
-     * addAndUnion must throw IllegalArgumentException if the second input is not in the partition.
+     * merge must throw IllegalArgumentException if the second input is not in the partition.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void addAndUnionIllegalArgumentException2() {
-        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("3", "4");
+    public void mergeIllegalArgumentException2() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).merge("3", "4");
     }
 
     /**
