@@ -189,6 +189,19 @@ public final class ImmutablePartition<T> extends AbstractPartition<T> {
     /**
      * This method is unsupported and will always throw {@link UnsupportedOperationException}.
      *
+     * @param x {@inheritDoc}
+     * @param y {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws UnsupportedOperationException always
+     */
+    @Override
+    public boolean addAndUnion(T x, T y) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This method is unsupported and will always throw {@link UnsupportedOperationException}.
+     *
      * @param t {@inheritDoc}
      * @return {@inheritDoc}
      * @throws UnsupportedOperationException always

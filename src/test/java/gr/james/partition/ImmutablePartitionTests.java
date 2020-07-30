@@ -293,6 +293,15 @@ public class ImmutablePartitionTests {
     }
 
     /**
+     * The addAndUnion method must throw UnsupportedOperationException.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void addAndUnionUnsupported() {
+        final Partition<Integer> immutablePartition = new ImmutablePartition<>(new UnionFindPartition<>());
+        immutablePartition.addAndUnion(0, 0);
+    }
+
+    /**
      * The addSubset method must throw UnsupportedOperationException.
      */
     @Test(expected = UnsupportedOperationException.class)

@@ -110,6 +110,33 @@ public interface Partition<T> {
     boolean add(T t);
 
     /**
+     * Inserts a new element in an existing subset if it's not already present in the partition.
+     * <p>
+     * If the element is already present in this partition, no further operation will be performed and {@code false}
+     * will be returned. As a result the call to {@code union(z, z)} will return {@code false} if {@code z} is already
+     * in the partition and {@code true} if it's not. In the latter case, {@code z} will end up in its own subset.
+     * <p>
+     * This method is equivalent to
+     * <pre><code>
+     * if (add(x)) {
+     *     union(x, y);
+     *     return true;
+     * } else {
+     *     return false;
+     * }
+     * </code></pre>
+     * but may be optimized in the underlying implementation to run faster.
+     *
+     * @param x the new element
+     * @param y the existing element to connect to
+     * @return {@code true} if this partition did not already contain the specified element, otherwise {@code false}
+     * @throws NullPointerException          if {@code x} or {@code y} is {@code null}
+     * @throws IllegalArgumentException      if {@code y} is not an element of this partition
+     * @throws UnsupportedOperationException if the operation is not supported by this partition
+     */
+    boolean addAndUnion(T x, T y);
+
+    /**
      * Removes the specified element from this partition if it is present.
      * <p>
      * As a result, this method also removes the element from its disjoint subset. The return value indicates whether a
@@ -165,7 +192,8 @@ public interface Partition<T> {
      * <p>
      * If {@code x} and {@code y} are on the same subset or if {@code x.equals(y)}, this method does nothing and returns
      * {@code false}. Otherwise, the disjoint sets of {@code x} and {@code y} will be merged into a single one and
-     * {@code true} will be returned.
+     * {@code true} will be returned. As a result, the union of an element with itself is a no-op and will return
+     * {@code false}.
      * <p>
      * The {@code union} method is commutative and the call {@code union(x, y)} will have exactly the same behavior as
      * {@code union(y, x)}.

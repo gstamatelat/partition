@@ -485,6 +485,52 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
     /**
      * {@inheritDoc}
      *
+     * @param x {@inheritDoc}
+     * @param y {@inheritDoc}
+     * @return {@inheritDoc}
+     * @throws NullPointerException     {@inheritDoc}
+     * @throws IllegalArgumentException {@inheritDoc}
+     */
+    @Override
+    public boolean addAndUnion(T x, T y) {
+        // Initialize
+        final Item newItem = new Item(x);
+        if (y == null) throw new NullPointerException();
+
+        // Add
+        final Item previous = items.putIfAbsent(x, newItem);
+        if (previous != null) {
+            return false;
+        }
+
+        if (x.equals(y)) {
+            newItem.addToComponentList();
+            count++;
+        } else {
+            // Union
+            final Item item2 = get(y);
+            final Item root2 = item2.root();
+            newItem.parent = root2;
+            root2.size += 1;
+
+            // Update doubly linked list
+            final Item tmp = newItem.nextItem;
+            newItem.nextItem = item2.nextItem;
+            item2.nextItem.previousItem = newItem;
+            item2.nextItem = tmp;
+            tmp.previousItem = item2;
+        }
+
+        assert get(x).rootNoCompress() == get(y).rootNoCompress();
+
+        validate();
+
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param t {@inheritDoc}
      * @return {@inheritDoc}
      * @throws NullPointerException {@inheritDoc}

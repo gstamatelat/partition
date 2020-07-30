@@ -311,6 +311,39 @@ public class UnionFindPartitionTests {
     }
 
     /**
+     * The addAndUnion method should be equivalent to add and union.
+     */
+    @Test
+    public void addAndUnionEquivalence() {
+        final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
+        final Partition<String> p2 = new UnionFindPartition<>(p1);
+        p1.addAndUnion("4", "1");
+        p2.add("4");
+        p2.union("4", "1");
+        Assert.assertEquals(p1, p2);
+    }
+
+    /**
+     * The addAndUnion method must create a new component if both inputs are the same element.
+     */
+    @Test
+    public void addAndUnionSameInputs() {
+        final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
+        p1.addAndUnion("4", "4");
+        final Partition<String> p2 = new UnionFindPartition<>("[[1],[2,3],[4]]", Function.identity());
+        Assert.assertEquals(p1, p2);
+    }
+
+    /**
+     * The addAndUnion method should return false if the new element is already in the partition.
+     */
+    @Test
+    public void addAndUnionReturnsFalse() {
+        final Partition<String> p1 = new UnionFindPartition<>("[[1],[2,3]]", Function.identity());
+        Assert.assertFalse(p1.addAndUnion("1", "2"));
+    }
+
+    /**
      * Create two partitions of a single subset, one using addSubset and the other using multiple unions, and check if
      * they are equal.
      */
@@ -450,6 +483,38 @@ public class UnionFindPartitionTests {
         p.union(0, 1);
         p.clear();
         Assert.assertEquals(p, unionFindVacantPartitionSupplier.get());
+    }
+
+    /**
+     * addAndUnion must throw NullPointerException on any null input.
+     */
+    @Test(expected = NullPointerException.class)
+    public void addAndUnionNullPointerException1() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("3", null);
+    }
+
+    /**
+     * addAndUnion must throw NullPointerException on any null input.
+     */
+    @Test(expected = NullPointerException.class)
+    public void addAndUnionNullPointerException2() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion(null, "3");
+    }
+
+    /**
+     * addAndUnion must throw NullPointerException on any null input.
+     */
+    @Test(expected = NullPointerException.class)
+    public void addAndUnionNullPointerException3() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("1", null);
+    }
+
+    /**
+     * addAndUnion must throw IllegalArgumentException if the second input is not in the partition.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void addAndUnionIllegalArgumentException2() {
+        new UnionFindPartition<>("[[1],[2]]", Function.identity()).addAndUnion("3", "4");
     }
 
     /**
