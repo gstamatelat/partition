@@ -1,6 +1,9 @@
 package gr.james.partition;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -73,7 +76,7 @@ public final class Partitions {
             indices.put(e, i++);
         }
         return new Iterator<Partition<T>>() {
-            private List<Integer> nextList = pi.next();
+            private int[] nextList = pi.next();
 
             @Override
             public boolean hasNext() {
@@ -82,7 +85,7 @@ public final class Partitions {
 
             @Override
             public Partition<T> next() {
-                final Partition<T> newPartition = factory.apply(indices.keySet(), e -> nextList.get(indices.get(e)));
+                final Partition<T> newPartition = factory.apply(indices.keySet(), e -> nextList[indices.get(e)]);
                 nextList = pi.next();
                 return newPartition;
             }
