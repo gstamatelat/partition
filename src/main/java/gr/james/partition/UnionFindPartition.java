@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
  * Element deletions are handled via the concept of vacant nodes. More specifically, when an element is removed from a
  * subset tree, its status is simply set to vacant and it is also removed from the subtree linked list. When deleting
  * root nodes, the root node is first swapped with any element on that subtree to avoid a persistent vacant root. As
- * path compressions occur in that tree, vacant nodes will eventually become leafs and reclaimed by the garbage
+ * path compressions occur in that tree, vacant nodes will eventually become leaves and reclaimed by the garbage
  * collector as there are no more parental references to them.
  *
  * @param <T> the element type
