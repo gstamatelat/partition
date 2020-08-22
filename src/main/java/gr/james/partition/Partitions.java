@@ -23,8 +23,11 @@ public final class Partitions {
      * Changes to the {@code elements} set will not reflect to the returned iterator after this method has been
      * invoked.
      * <p>
-     * The algorithm used in this method is mentioned in <a href="https://stackoverflow.com/a/30898130/296631">this
-     * answer in StackOverflow.com</a>. Specifically the pseudocode is as follows:
+     * The algorithm used in this method is inspired by <a href="https://stackoverflow.com/a/30898130/296631">this
+     * answer in StackOverflow.com</a>. A slight modification appears in <em>The Art of Computer Programming (Section
+     * 7.2.1.5)</em> as <em>Algorithm H</em> and is a manifestation of the method by George Hutchinson in
+     * <a href="https://doi.org/10.1145/367651.367661">Partitioning algorithms for finite sets</a>. Specifically the
+     * pseudocode is as follows:
      * <pre><code>
      * 1. Initialize a vector v with all zeroes, where v[i] determines the subset of element i.
      * 2. Initialize an auxiliary vector m, also with all zeroes.
