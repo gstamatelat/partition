@@ -58,9 +58,9 @@ public final class Partitions {
      * @param factory  a function that creates a {@link Partition} from an element set and a mapping function
      * @param <T>      the element type
      * @return an {@link Iterator} that iterates through all possible partitions of {@code elements}
-     * @throws NullPointerException     if {@code of} or {@code factory} is {@code null}
-     * @throws NullPointerException     if any element in {@code of} is {@code null}
-     * @throws IllegalArgumentException if {@code of} is empty
+     * @throws NullPointerException     if {@code elements} or {@code factory} is {@code null}
+     * @throws NullPointerException     if any element in {@code elements} is {@code null}
+     * @throws IllegalArgumentException if {@code elements} is empty
      */
     public static <T> Iterator<Partition<T>> partitions(Set<T> elements, BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
         if (factory == null) {
