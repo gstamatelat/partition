@@ -1,14 +1,18 @@
 package gr.james.partition;
 
-class PartitionsIterator {
+class PartitionsIteratorAtMostK {
     final int[] a;
     final int[] b;
     final int n;
+    final int k;
     boolean isFirst = true;
 
-    public PartitionsIterator(int n) {
-        assert n > 0;
-        this.n = n;
+    public PartitionsIteratorAtMostK(int numberOfElements, int maxBlocks) {
+        assert numberOfElements > 0;
+        assert maxBlocks > 0;
+        assert numberOfElements >= maxBlocks;
+        this.n = numberOfElements;
+        this.k = maxBlocks;
         this.a = new int[this.n];
         this.b = new int[this.n];
     }
@@ -19,7 +23,7 @@ class PartitionsIterator {
             return a;
         }
         int i = n - 1;
-        while (a[i] == n - 1 || a[i] > b[i]) {
+        while (a[i] == k - 1 || a[i] > b[i]) {
             i--;
         }
         if (i == 0) return null;
