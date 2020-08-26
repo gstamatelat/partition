@@ -23,14 +23,14 @@ Using Maven
 <dependency>
   <groupId>gr.james</groupId>
   <artifactId>partition</artifactId>
-  <version>0.4</version>
+  <version>0.5</version>
 </dependency>
 ```
 
 Using Gradle
 
 ```
-compile 'gr.james:partition:0.4'
+compile 'gr.james:partition:0.5'
 ```
 
 ## Examples
