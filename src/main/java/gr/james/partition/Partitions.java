@@ -201,7 +201,7 @@ public final class Partitions {
      * {@code elements}.
      *
      * @param elements the element set
-     * @param k        the number of subsets in the enumerated partitions
+     * @param k        the maximum number of subsets in the enumerated partitions
      * @param factory  a function that creates a {@link Partition} from an element set and a mapping function
      * @param <T>      the element type
      * @return an {@link Iterator} that iterates through all possible partitions of {@code elements}
