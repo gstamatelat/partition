@@ -76,7 +76,32 @@ Enumerate all possible partitions of 3 elements.
 ```java
 Partition<Integer> p = new UnionFindPartition<>();
 IntStream.range(0, 3).forEach(p::add);
-Iterator<Partition<Integer>> it = Partitions.partitions(p.elements(), UnionFindPartition::new);
+Iterator<Partition<Integer>> it = Partitions.lexicographicPartitions(
+    p.elements(), UnionFindPartition::new);
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+```
+
+Enumerate all possible partitions of 3 elements with at most 2 subsets.
+
+```java
+Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0, 3).forEach(p::add);
+Iterator<Partition<Integer>> it = Partitions.lexicographicPartitionsAtMostK(
+    p.elements(), UnionFindPartition::new);
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+```
+
+Enumerate all possible partitions of 3 elements with exactly 2 subsets.
+
+```java
+Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0, 3).forEach(p::add);
+Iterator<Partition<Integer>> it = Partitions.lexicographicPartitionsK(
+    p.elements(), UnionFindPartition::new);
 while (it.hasNext()) {
     System.out.println(it.next());
 }
