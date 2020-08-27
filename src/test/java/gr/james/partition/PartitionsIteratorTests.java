@@ -45,6 +45,21 @@ public class PartitionsIteratorTests {
     }
 
     /**
+     * The number of possible partitions of 10 elements with kmin=1 and kmax=5 should be exactly 86472.
+     */
+    @Test
+    public void correctness3() {
+        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 1, 5, ImmutablePartition::new);
+        final Set<Partition<Integer>> partitions = new HashSet<>();
+        while (it.hasNext()) {
+            final Partition<Integer> p = it.next();
+            Assert.assertEquals(10, p.size());
+            partitions.add(p);
+        }
+        Assert.assertEquals(86472, partitions.size());
+    }
+
+    /**
      * The method should throw {@link NullPointerException} if the first input is {@code null}.
      */
     @Test(expected = NullPointerException.class)
