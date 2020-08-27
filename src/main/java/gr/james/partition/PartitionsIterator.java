@@ -26,6 +26,18 @@ class PartitionsIterator {
         }
     }
 
+    private boolean validate() {
+        int max = 0;
+        assert a[0] == 0;
+        for (int i = 0; i < n; i++) {
+            assert a[i] <= kmax - 1;
+            assert a[i] <= max + 1;
+            max = Math.max(a[i], max);
+        }
+        assert max >= kmin - 1;
+        return true;
+    }
+
     public int[] next() {
         /* Return the first element */
         if (isFirst) {
@@ -54,6 +66,9 @@ class PartitionsIterator {
             a[i] = b[i] + 1;
             b[i + 1] = a[i];
         }
+
+        /* Validate */
+        assert validate();
 
         /* Return */
         return a;
