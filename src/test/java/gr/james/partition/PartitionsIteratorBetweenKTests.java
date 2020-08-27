@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 
 /**
  * Test for the {@link Partitions#lexicographicPartitionsBetweenK(Set, int, int, BiFunction)} method, and consequently
- * the {@link PartitionsIteratorBetweenK} class.
+ * the {@link PartitionsIterator} class.
  */
 public class PartitionsIteratorBetweenKTests {
     /**

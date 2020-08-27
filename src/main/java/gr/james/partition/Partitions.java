@@ -70,7 +70,7 @@ public final class Partitions {
         if (elements.size() < 1) {
             throw new IllegalArgumentException();
         }
-        final PartitionsIterator pi = new PartitionsIterator(elements.size());
+        final PartitionsIterator pi = new PartitionsIterator(elements.size(), 1, elements.size());
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {
@@ -148,7 +148,7 @@ public final class Partitions {
         if (k > elements.size()) {
             throw new IllegalArgumentException();
         }
-        final PartitionsIteratorK pi = new PartitionsIteratorK(elements.size(), k);
+        final PartitionsIterator pi = new PartitionsIterator(elements.size(), k, k);
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {
@@ -226,7 +226,7 @@ public final class Partitions {
         if (k > elements.size()) {
             throw new IllegalArgumentException();
         }
-        final PartitionsIteratorAtMostK pi = new PartitionsIteratorAtMostK(elements.size(), k);
+        final PartitionsIterator pi = new PartitionsIterator(elements.size(), 1, k);
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {
@@ -310,7 +310,7 @@ public final class Partitions {
         if (kmin > kmax) {
             throw new IllegalArgumentException();
         }
-        final PartitionsIteratorBetweenK pi = new PartitionsIteratorBetweenK(elements.size(), kmin, kmax);
+        final PartitionsIterator pi = new PartitionsIterator(elements.size(), kmin, kmax);
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {
