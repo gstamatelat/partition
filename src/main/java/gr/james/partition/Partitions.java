@@ -45,11 +45,11 @@ public final class Partitions {
      * <p>
      * Typically, the implicit map constructor should be used as {@code factory}, for example:
      * <pre><code>
-     * Partitions.lexicographicPartitionsBetweenK(set, k, UnionFindPartition::new);
+     * Partitions.lexicographicEnumeration(set, k, UnionFindPartition::new);
      * </code></pre>
      * or
      * <pre><code>
-     * Partitions.lexicographicPartitionsBetweenK(set, k, ImmutablePartition::new);
+     * Partitions.lexicographicEnumeration(set, k, ImmutablePartition::new);
      * </code></pre>
      * The {@link Iterator#next()} method runs in constant amortized time but it will invoke the {@code factory} method
      * which, if implemented properly, should run in linear time in respect to the number of elements. The
@@ -69,10 +69,10 @@ public final class Partitions {
      * @throws IllegalArgumentException if {@code kmin} or {@code kmax} is greater than the number of elements in {@code elements}
      * @throws IllegalArgumentException if {@code kmin} is greater than {@code kmax}
      */
-    public static <T> Iterator<Partition<T>> lexicographicPartitionsBetweenK(Set<T> elements,
-                                                                             int kmin,
-                                                                             int kmax,
-                                                                             BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
+    public static <T> Iterator<Partition<T>> lexicographicEnumeration(Set<T> elements,
+                                                                      int kmin,
+                                                                      int kmax,
+                                                                      BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
         if (factory == null) {
             throw new NullPointerException();
         }
