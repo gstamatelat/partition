@@ -201,7 +201,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         }
     }
 
-    private void validate() {
+    private boolean validate() {
         assert items.values().stream().map(Item::rootNoCompress).distinct().count() == count;
         assert !items.containsKey(null);
         assert items.entrySet().stream().allMatch(e -> e.getKey().equals(e.getValue().item));
@@ -230,6 +230,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         assert (anyRoot == null) || (anyRoot.parent == anyRoot);
         assert (items.size() == 0) == (count == 0);
         assert items.size() >= count;
+        return true;
     }
 
     private int cycleLength(Item start, Function<Item, Item> next) {
@@ -479,7 +480,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         count++;
 
-        validate();
+        assert validate();
 
         return true;
     }
@@ -525,7 +526,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         assert get(x).rootNoCompress() == get(y).rootNoCompress();
 
-        validate();
+        assert validate();
 
         return true;
     }
@@ -553,7 +554,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
             final Item removed = items.remove(t);
             assert removed == item;
             count--;
-            validate();
+            assert validate();
             return true;
         }
 
@@ -581,7 +582,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         root.size--;
 
-        validate();
+        assert validate();
 
         return true;
     }
@@ -594,7 +595,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         this.items.clear();
         this.anyRoot = null;
         this.count = 0;
-        validate();
+        assert validate();
     }
 
     /**
@@ -649,7 +650,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         assert subset.stream().map(t -> get(t).parent).distinct().count() == 1;
 
-        validate();
+        assert validate();
     }
 
     /**
@@ -679,7 +680,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         count--;
         assert !items.containsKey(t);
         assert items.values().stream().noneMatch(el -> el.item.equals(t));
-        validate();
+        assert validate();
         return true;
     }
 
@@ -724,7 +725,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         assert item1.rootNoCompress() == item2.rootNoCompress();
 
-        validate();
+        assert validate();
 
         return true;
     }
@@ -773,7 +774,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
 
         count++;
 
-        validate();
+        assert validate();
 
         return true;
     }
@@ -802,7 +803,7 @@ public class UnionFindPartition<T> extends AbstractPartition<T> {
         split(x);
         union(x, y);
 
-        validate();
+        assert validate();
 
         return true;
     }
