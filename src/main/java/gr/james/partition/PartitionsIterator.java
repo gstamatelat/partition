@@ -40,9 +40,9 @@ class PartitionsIterator {
         }
         if (i == 0) return null;
         a[i]++;
+        b[i + 1] = Math.max(a[i], b[i]);
 
         /* Start going forward putting zeroes for as long as we can */
-        b[i + 1] = Math.max(a[i], b[i]);
         int zeroes = b[i + 1] + n - i - kmin;
         for (i = i + 1; zeroes > 0 && i < n; i++, zeroes--) {
             a[i] = 0;
