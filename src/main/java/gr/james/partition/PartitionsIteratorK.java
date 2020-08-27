@@ -5,7 +5,6 @@ class PartitionsIteratorK {
     final int[] b;
     final int n;
     final int k;
-    final PartitionsIteratorAtMostK it;
     boolean isFirst = true;
 
     public PartitionsIteratorK(int n, int k) {
@@ -16,7 +15,6 @@ class PartitionsIteratorK {
         this.k = k;
         this.a = new int[this.n];
         this.b = new int[this.n];
-        this.it = new PartitionsIteratorAtMostK(n, k);
         for (int i = this.n - 1; i > this.n - this.k; i--) {
             a[i] = this.k - this.n + i;
             b[i] = this.k - this.n + i - 1;
