@@ -7,12 +7,12 @@ class PartitionsIteratorAtMostK {
     final int k;
     boolean isFirst = true;
 
-    public PartitionsIteratorAtMostK(int numberOfElements, int maxBlocks) {
-        assert numberOfElements > 0;
-        assert maxBlocks > 0;
-        assert numberOfElements >= maxBlocks;
-        this.n = numberOfElements;
-        this.k = maxBlocks;
+    public PartitionsIteratorAtMostK(int n, int k) {
+        assert n > 0;
+        assert k > 0;
+        assert n >= k;
+        this.n = n;
+        this.k = k;
         this.a = new int[this.n];
         this.b = new int[this.n];
     }

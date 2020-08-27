@@ -8,18 +8,18 @@ class PartitionsIteratorK {
     final PartitionsIteratorAtMostK it;
     boolean isFirst = true;
 
-    public PartitionsIteratorK(int numberOfElements, int blocks) {
-        assert numberOfElements > 0;
-        assert blocks > 0;
-        assert numberOfElements >= blocks;
-        this.n = numberOfElements;
-        this.k = blocks;
+    public PartitionsIteratorK(int n, int k) {
+        assert n > 0;
+        assert k > 0;
+        assert n >= k;
+        this.n = n;
+        this.k = k;
         this.a = new int[this.n];
         this.b = new int[this.n];
-        this.it = new PartitionsIteratorAtMostK(numberOfElements, blocks);
-        for (int i = n - 1; i > n - k; i--) {
-            a[i] = k - n + i;
-            b[i] = k - n + i - 1;
+        this.it = new PartitionsIteratorAtMostK(n, k);
+        for (int i = this.n - 1; i > this.n - this.k; i--) {
+            a[i] = this.k - this.n + i;
+            b[i] = this.k - this.n + i - 1;
         }
     }
 
