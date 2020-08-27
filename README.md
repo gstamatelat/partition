@@ -71,37 +71,13 @@ System.out.println(p);
 p.union(1, 3);
 ```
 
-Enumerate all possible partitions of 3 elements.
+Enumerate all possible partitions of 4 elements with exactly 2 or 3 subsets.
 
 ```java
-Partition<Integer> p = new UnionFindPartition<>();
-IntStream.range(0, 3).forEach(p::add);
-Iterator<Partition<Integer>> it = Partitions.lexicographicPartitions(
-    p.elements(), UnionFindPartition::new);
-while (it.hasNext()) {
-    System.out.println(it.next());
-}
-```
-
-Enumerate all possible partitions of 3 elements with at most 2 subsets.
-
-```java
-Partition<Integer> p = new UnionFindPartition<>();
-IntStream.range(0, 3).forEach(p::add);
-Iterator<Partition<Integer>> it = Partitions.lexicographicPartitionsAtMostK(
-    p.elements(), UnionFindPartition::new);
-while (it.hasNext()) {
-    System.out.println(it.next());
-}
-```
-
-Enumerate all possible partitions of 3 elements with exactly 2 subsets.
-
-```java
-Partition<Integer> p = new UnionFindPartition<>();
-IntStream.range(0, 3).forEach(p::add);
-Iterator<Partition<Integer>> it = Partitions.lexicographicPartitionsK(
-    p.elements(), UnionFindPartition::new);
+final Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0, 4).forEach(p::add);
+Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(
+    p.elements(), 2, 3, UnionFindPartition::new);
 while (it.hasNext()) {
     System.out.println(it.next());
 }
