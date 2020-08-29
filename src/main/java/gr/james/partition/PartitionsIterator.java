@@ -56,6 +56,7 @@ class PartitionsIterator {
 
         /* Start going forward putting zeroes for as long as we can */
         int zeroes = b[i + 1] + n - i - kmin;
+        assert zeroes >= 0;
         for (i = i + 1; zeroes > 0 && i < n; i++, zeroes--) {
             a[i] = 0;
             b[i + 1] = b[i];
