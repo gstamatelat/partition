@@ -82,3 +82,15 @@ while (it.hasNext()) {
     System.out.println(it.next());
 }
 ```
+
+Same snippet with reverse order.
+
+```java
+final Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0, 4).forEach(p::add);
+Iterator<Partition<Integer>> it = Partitions.reverseLexicographicEnumeration(
+    p.elements(), 2, 3, UnionFindPartition::new);
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+```
