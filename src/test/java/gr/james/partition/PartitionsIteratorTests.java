@@ -21,12 +21,15 @@ public class PartitionsIteratorTests {
     public void correctness1() {
         final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 4, 6, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
+        int count = 0;
         while (it.hasNext()) {
             final Partition<Integer> p = it.next();
             Assert.assertEquals(10, p.size());
             partitions.add(p);
+            count++;
         }
         Assert.assertEquals(99457, partitions.size());
+        Assert.assertEquals(99457, count);
     }
 
     /**
@@ -36,12 +39,15 @@ public class PartitionsIteratorTests {
     public void correctness2() {
         final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 5, 5, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
+        int count = 0;
         while (it.hasNext()) {
             final Partition<Integer> p = it.next();
             Assert.assertEquals(10, p.size());
             partitions.add(p);
+            count++;
         }
         Assert.assertEquals(42525, partitions.size());
+        Assert.assertEquals(42525, count);
     }
 
     /**
@@ -51,12 +57,15 @@ public class PartitionsIteratorTests {
     public void correctness3() {
         final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 1, 5, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
+        int count = 0;
         while (it.hasNext()) {
             final Partition<Integer> p = it.next();
             Assert.assertEquals(10, p.size());
             partitions.add(p);
+            count++;
         }
         Assert.assertEquals(86472, partitions.size());
+        Assert.assertEquals(86472, count);
     }
 
     /**
