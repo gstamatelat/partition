@@ -343,7 +343,7 @@ public final class Partitions {
                 throw new IllegalArgumentException();
             }
         }
-        final PartitionsIteratorDiscrete pi = new PartitionsIteratorDiscrete(elements.size(), Arrays.copyOf(k, k.length));
+        final PartitionsIteratorDiscreteReverse pi = new PartitionsIteratorDiscreteReverse(elements.size(), Arrays.copyOf(k, k.length));
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {

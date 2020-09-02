@@ -76,13 +76,14 @@ class PartitionsIteratorDiscreteReverse {
         b[i + 1] = Math.max(a[i], b[i]);
 
         /* Switch direction and place the maximum values possible */
-        int kmax = mr[b[i + 1] + n - i];
+        int maxPossible = b[i + 1] + n - i;
+        int kmax = maxPossible >= mr.length ? k[k.length - 1] : mr[maxPossible];
         for (i = i + 1; b[i] < kmax - 1 && i < n; i++) {
             a[i] = b[i] + 1;
             b[i + 1] = a[i];
         }
 
-        /* Maintain direction and fill the remaining places with kmin-1 */
+        /* Maintain direction and fill the remaining places with kmax-1 */
         for (; i < n; i++) {
             a[i] = kmax - 1;
             b[i + 1] = kmax - 1;

@@ -3,23 +3,20 @@ package gr.james.partition;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
 /**
- * Test for the {@link Partitions#lexicographicEnumeration(Set, int[], BiFunction)} method, and consequently the
- * {@link PartitionsIteratorDiscrete} class.
+ * Test for the {@link Partitions#reverseLexicographicEnumeration(Set, int[], BiFunction)} method, and consequently the
+ * {@link PartitionsIteratorDiscreteReverse} class.
  */
-public class PartitionsIteratorDiscreteTests {
+public class PartitionsIteratorDiscreteReverseTests {
     /**
      * The number of possible partitions of 10 elements with k={2,6,9} should be exactly 23383.
      */
     @Test
     public void correctness1() {
-        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{9, 2, 6, 6, 9}, ImmutablePartition::new);
+        final Iterator<Partition<Integer>> it = Partitions.reverseLexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{9, 2, 6, 6, 9}, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
         int count = 0;
         while (it.hasNext()) {
@@ -37,7 +34,7 @@ public class PartitionsIteratorDiscreteTests {
      */
     @Test
     public void correctness2() {
-        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{1}, ImmutablePartition::new);
+        final Iterator<Partition<Integer>> it = Partitions.reverseLexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{1}, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
         int count = 0;
         while (it.hasNext()) {
@@ -55,7 +52,7 @@ public class PartitionsIteratorDiscreteTests {
      */
     @Test
     public void correctness3() {
-        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{10, 1}, ImmutablePartition::new);
+        final Iterator<Partition<Integer>> it = Partitions.reverseLexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{10, 1}, ImmutablePartition::new);
         final Set<Partition<Integer>> partitions = new HashSet<>();
         int count = 0;
         while (it.hasNext()) {
@@ -69,12 +66,32 @@ public class PartitionsIteratorDiscreteTests {
     }
 
     /**
+     * Should be the same enumeration with the forward enumeration but reverse.
+     */
+    @Test
+    public void correctnessReverse() {
+        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{3, 5}, ImmutablePartition::new);
+        final Iterator<Partition<Integer>> itr = Partitions.reverseLexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), new int[]{3, 5}, ImmutablePartition::new);
+        final List<Partition<Integer>> partitions = new ArrayList<>();
+        final List<Partition<Integer>> partitionsReverse = new ArrayList<>();
+        while (it.hasNext() && itr.hasNext()) {
+            final Partition<Integer> p = it.next();
+            final Partition<Integer> pr = itr.next();
+            partitions.add(p);
+            partitionsReverse.add(pr);
+        }
+        Assert.assertTrue(!it.hasNext() && !itr.hasNext());
+        Collections.reverse(partitionsReverse);
+        Assert.assertEquals(partitions, partitionsReverse);
+    }
+
+    /**
      * The method should throw {@link NullPointerException} if the first input is {@code null}.
      */
     @Test(expected = NullPointerException.class)
     public void nullInput1() {
         final Set<Integer> s = null;
-        Partitions.lexicographicEnumeration(s, new int[]{1, 2}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, new int[]{1, 2}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 
     /**
@@ -83,7 +100,7 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = NullPointerException.class)
     public void nullInput2() {
         final Set<Integer> s = new HashSet<>();
-        Partitions.lexicographicEnumeration(s, null, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, null, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 
     /**
@@ -92,7 +109,7 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = NullPointerException.class)
     public void nullInput3() {
         final Set<Integer> s = new HashSet<>();
-        Partitions.lexicographicEnumeration(s, new int[]{1, 2}, null);
+        Partitions.reverseLexicographicEnumeration(s, new int[]{1, 2}, null);
     }
 
     /**
@@ -101,7 +118,7 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = NullPointerException.class)
     public void nullInput4() {
         final Set<Integer> s = Helper.newHashSet(1, 2, null);
-        Partitions.lexicographicEnumeration(s, new int[]{1}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, new int[]{1}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 
     /**
@@ -110,7 +127,7 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = IllegalArgumentException.class)
     public void emptyOfSet() {
         final Set<Integer> s = new HashSet<>();
-        Partitions.lexicographicEnumeration(s, new int[]{1}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, new int[]{1}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 
     /**
@@ -119,7 +136,7 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = IllegalArgumentException.class)
     public void notPositiveK() {
         final Set<Integer> s = new HashSet<>(Arrays.asList(1, 2, 3));
-        Partitions.lexicographicEnumeration(s, new int[]{1, 0}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, new int[]{1, 0}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 
     /**
@@ -128,6 +145,6 @@ public class PartitionsIteratorDiscreteTests {
     @Test(expected = IllegalArgumentException.class)
     public void kBiggerThanN() {
         final Set<Integer> s = new HashSet<>(Arrays.asList(1, 2, 3));
-        Partitions.lexicographicEnumeration(s, new int[]{2, 4}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
+        Partitions.reverseLexicographicEnumeration(s, new int[]{2, 4}, (elements, mapping) -> new ImmutablePartition<>(new UnionFindPartition<>()));
     }
 }
