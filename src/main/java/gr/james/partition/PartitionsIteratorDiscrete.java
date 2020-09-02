@@ -13,7 +13,7 @@ class PartitionsIteratorDiscrete {
     public PartitionsIteratorDiscrete(int n, int[] k) {
         assert n > 0;
         assert k.length > 0;
-        assert Arrays.stream(k).distinct().count() == k.length;
+        // assert Arrays.stream(k).distinct().count() == k.length;
         assert Arrays.stream(k).allMatch(x -> x <= n);
         this.n = n;
         this.k = k;
@@ -33,14 +33,6 @@ class PartitionsIteratorDiscrete {
         }
         assert m[0] == k[0];
         assert m[m.length - 1] == k[k.length - 1];
-    }
-
-    public static void main(String[] args) {
-        PartitionsIteratorDiscrete pi = new PartitionsIteratorDiscrete(10, new int[]{2, 6, 6, 9, 5});
-        int count = 1;
-        for (int[] a = pi.next(); a != null; a = pi.next()) {
-            System.out.printf("%d %s%n", count++, Arrays.toString(a));
-        }
     }
 
     private boolean validate() {
@@ -68,7 +60,7 @@ class PartitionsIteratorDiscrete {
         do {
             i--;
             tmpMax = Math.max(a[i] + 1, b[i]);
-        } while (a[i] == k[k.length - 1] - 1 || m[tmpMax + 1] - tmpMax - 1 > n - i - 1 || a[i] > b[i]);
+        } while (i > 0 && (a[i] == k[k.length - 1] - 1 || m[tmpMax + 1] - tmpMax - 1 > n - i - 1 || a[i] > b[i]));
         if (i == 0) return null;
         a[i]++;
         b[i + 1] = Math.max(a[i], b[i]);

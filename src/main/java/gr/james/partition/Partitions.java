@@ -145,7 +145,7 @@ public final class Partitions {
      * @param <T>      the element type
      * @return an {@link Iterator} that iterates through all possible partitions of {@code elements} with the specified
      * number of blocks
-     * @throws NullPointerException     if {@code elements} or {@code factory} is {@code null}
+     * @throws NullPointerException     if {@code elements}, {@code k} or {@code factory} is {@code null}
      * @throws NullPointerException     if any element in {@code elements} is {@code null}
      * @throws IllegalArgumentException if {@code elements} is empty
      * @throws IllegalArgumentException if {@code k} is empty
@@ -156,6 +156,9 @@ public final class Partitions {
                                                                       int[] k,
                                                                       BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
         if (factory == null) {
+            throw new NullPointerException();
+        }
+        if (k == null) {
             throw new NullPointerException();
         }
         if (elements.size() < 1) {
@@ -313,7 +316,7 @@ public final class Partitions {
      * @param <T>      the element type
      * @return an {@link Iterator} that iterates through all possible partitions of {@code elements} with the specified
      * number of blocks
-     * @throws NullPointerException     if {@code elements} or {@code factory} is {@code null}
+     * @throws NullPointerException     if {@code elements}, {@code k} or {@code factory} is {@code null}
      * @throws NullPointerException     if any element in {@code elements} is {@code null}
      * @throws IllegalArgumentException if {@code elements} is empty
      * @throws IllegalArgumentException if {@code k} is empty
@@ -324,6 +327,9 @@ public final class Partitions {
                                                                              int[] k,
                                                                              BiFunction<Set<T>, Function<T, Object>, Partition<T>> factory) {
         if (factory == null) {
+            throw new NullPointerException();
+        }
+        if (k == null) {
             throw new NullPointerException();
         }
         if (elements.size() < 1) {

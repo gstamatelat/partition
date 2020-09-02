@@ -123,7 +123,7 @@ public class PartitionsIteratorTests {
     }
 
     /**
-     * The method should throw {@link IllegalArgumentException} is kmax is greater than the size of elements.
+     * The method should throw {@link IllegalArgumentException} if kmax is greater than the size of elements.
      */
     @Test(expected = IllegalArgumentException.class)
     public void kBiggerThanN() {
@@ -132,7 +132,7 @@ public class PartitionsIteratorTests {
     }
 
     /**
-     * The method should throw {@link IllegalArgumentException} is kmin is greater than kmax.
+     * The method should throw {@link IllegalArgumentException} if kmin is greater than kmax.
      */
     @Test(expected = IllegalArgumentException.class)
     public void kMinGreaterThanKmax() {

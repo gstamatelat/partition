@@ -14,7 +14,7 @@ class PartitionsIteratorDiscreteReverse {
     public PartitionsIteratorDiscreteReverse(int n, int[] k) {
         assert n > 0;
         assert k.length > 0;
-        assert Arrays.stream(k).distinct().count() == k.length;
+        // assert Arrays.stream(k).distinct().count() == k.length;
         assert Arrays.stream(k).allMatch(x -> x <= n);
         this.n = n;
         this.k = k;
@@ -43,14 +43,6 @@ class PartitionsIteratorDiscreteReverse {
         assert m[m.length - 1] == k[k.length - 1];
         assert mr[0] == 0;
         assert mr[mr.length - 1] == mr.length - 1;
-    }
-
-    public static void main(String[] args) {
-        PartitionsIteratorDiscreteReverse pi = new PartitionsIteratorDiscreteReverse(10, new int[]{2, 6, 9, 5});
-        int count = 1;
-        for (int[] a = pi.next(); a != null; a = pi.next()) {
-            System.out.printf("%d %s%n", count++, Arrays.toString(a));
-        }
     }
 
     private boolean validate() {
