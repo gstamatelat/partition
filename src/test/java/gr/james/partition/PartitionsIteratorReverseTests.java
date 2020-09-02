@@ -11,9 +11,9 @@ import java.util.function.BiFunction;
 
 /**
  * Test for the {@link Partitions#reverseLexicographicEnumeration(Set, int, int, BiFunction)} method, and consequently
- * the {@link ReversePartitionsIterator} class.
+ * the {@link PartitionsIteratorReverse} class.
  */
-public class ReversePartitionsIteratorTests {
+public class PartitionsIteratorReverseTests {
     /**
      * The number of possible partitions of 10 elements with kmin=4 and kmax=6 should be exactly 99457.
      */

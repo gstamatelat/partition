@@ -1,6 +1,6 @@
 package gr.james.partition;
 
-class ReversePartitionsIterator {
+class PartitionsIteratorReverse {
     final int[] a;
     final int[] b;
     final int n;
@@ -8,7 +8,7 @@ class ReversePartitionsIterator {
     final int kmax;
     boolean isFirst = true;
 
-    public ReversePartitionsIterator(int n, int kmin, int kmax) {
+    public PartitionsIteratorReverse(int n, int kmin, int kmax) {
         assert n > 0;
         assert kmin > 0;
         assert kmax > 0;

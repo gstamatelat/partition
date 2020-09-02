@@ -176,7 +176,7 @@ public final class Partitions {
         if (kmin > kmax) {
             throw new IllegalArgumentException();
         }
-        final ReversePartitionsIterator pi = new ReversePartitionsIterator(elements.size(), kmin, kmax);
+        final PartitionsIteratorReverse pi = new PartitionsIteratorReverse(elements.size(), kmin, kmax);
         final Map<T, Integer> indices = new HashMap<>();
         int i = 0;
         for (T e : elements) {
