@@ -71,7 +71,7 @@ System.out.println(p);
 p.union(1, 3);
 ```
 
-Enumerate all possible partitions of 4 elements with exactly 2 or 3 subsets.
+Enumerate all possible partitions of 4 elements with exactly 2 or 3 subsets in lexicographic order.
 
 ```java
 final Partition<Integer> p = new UnionFindPartition<>();
@@ -83,13 +83,25 @@ while (it.hasNext()) {
 }
 ```
 
-Same snippet with reverse order.
+Same snippet with reverse lexicographic order.
 
 ```java
 final Partition<Integer> p = new UnionFindPartition<>();
 IntStream.range(0, 4).forEach(p::add);
 Iterator<Partition<Integer>> it = Partitions.reverseLexicographicEnumeration(
     p.elements(), 2, 3, UnionFindPartition::new);
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+```
+
+Enumerate all possible partitions of 4 elements with exactly 1 or 3 subsets in lexicographic order.
+
+```java
+final Partition<Integer> p = new UnionFindPartition<>();
+IntStream.range(0, 4).forEach(p::add);
+Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(
+    p.elements(), new int[]{1, 3}, UnionFindPartition::new);
 while (it.hasNext()) {
     System.out.println(it.next());
 }
