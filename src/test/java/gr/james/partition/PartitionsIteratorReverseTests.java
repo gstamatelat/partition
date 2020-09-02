@@ -3,10 +3,7 @@ package gr.james.partition;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
 /**
@@ -66,6 +63,26 @@ public class PartitionsIteratorReverseTests {
         }
         Assert.assertEquals(86472, partitions.size());
         Assert.assertEquals(86472, count);
+    }
+
+    /**
+     * Should be the same enumeration with the forward enumeration but reverse.
+     */
+    @Test
+    public void correctnessReverse() {
+        final Iterator<Partition<Integer>> it = Partitions.lexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 3, 5, ImmutablePartition::new);
+        final Iterator<Partition<Integer>> itr = Partitions.reverseLexicographicEnumeration(Helper.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 3, 5, ImmutablePartition::new);
+        final List<Partition<Integer>> partitions = new ArrayList<>();
+        final List<Partition<Integer>> partitionsReverse = new ArrayList<>();
+        while (it.hasNext() && itr.hasNext()) {
+            final Partition<Integer> p = it.next();
+            final Partition<Integer> pr = itr.next();
+            partitions.add(p);
+            partitionsReverse.add(pr);
+        }
+        Assert.assertTrue(!it.hasNext() && !itr.hasNext());
+        Collections.reverse(partitionsReverse);
+        Assert.assertEquals(partitions, partitionsReverse);
     }
 
     /**
