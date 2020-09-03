@@ -14,7 +14,6 @@ class PartitionsIteratorDiscreteReverse {
     public PartitionsIteratorDiscreteReverse(int n, int[] k) {
         assert n > 0;
         assert k.length > 0;
-        // assert Arrays.stream(k).distinct().count() == k.length;
         assert Arrays.stream(k).allMatch(x -> x <= n);
         this.n = n;
         this.k = k;
