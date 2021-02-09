@@ -29,7 +29,7 @@ publishing {
             from components.java
             pom {
                 name = 'Partition'
-                description = 'In mathematical terms, according to the book Naive Set Theory (Halmos), a partition of a set U is a set of nonempty subsets of U such that every element u in U is in exactly one of these subsets'
+                description = 'Java 8 implementation of the set partition'
                 url = 'https://github.com/gstamatelat/partition'
                 licenses {
                     license {
