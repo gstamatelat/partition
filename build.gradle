@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id "com.github.spotbugs" version "4.4.4"
+    id "com.github.spotbugs" version "4.6.0"
 }
 
 group = 'gr.james'
@@ -10,7 +10,7 @@ version = '0.8'
 sourceCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 java {
@@ -25,8 +25,31 @@ spotbugs {
 
 publishing {
     publications {
-        library(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
+            pom {
+                name = 'Partition'
+                description = 'In mathematical terms, according to the book Naive Set Theory (Halmos), a partition of a set U is a set of nonempty subsets of U such that every element u in U is in exactly one of these subsets'
+                url = 'https://github.com/gstamatelat/partition'
+                licenses {
+                    license {
+                        name = 'The MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'gstamatelat'
+                        name = 'Giorgos Stamatelatos'
+                        email = 'gstamatelat@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/gstamatelat/partition.git'
+                    developerConnection = 'scm:git:git@github.com:gstamatelat/partition.git'
+                    url = 'https://github.com/gstamatelat/partition'
+                }
+            }
         }
     }
     repositories {

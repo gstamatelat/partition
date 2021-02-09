@@ -13,9 +13,7 @@ access to all the supported methods.
 
 ## Using
 
-Partition is published to
-[jcenter](https://bintray.com/gstamatelat/partition/partition). You
-can add a dependency from your project as follows:
+You can add a dependency from your project as follows:
 
 Using Maven
 
@@ -29,8 +27,9 @@ Using Maven
 
 Using Gradle
 
-```
-compile 'gr.james:partition:0.8'
+```gradle
+implementation 'gr.james:partition:0.8' // Runtime
+api            'gr.james:partition:0.8' // Public API
 ```
 
 ## Examples
